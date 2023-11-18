@@ -32,12 +32,13 @@
     <dependencies>
 		
 		<dependency>
-		    <groupId>org.projectlombok</groupId>
-		    <artifactId>lombok</artifactId>
-		    <version>1.18.22</version>
-		    <scope>provided</scope>
+		  <groupId>org.projectlombok</groupId>
+		  <artifactId>lombok</artifactId>
+		  <version>1.18.4</version>
+		  <scope>provided</scope>
+		
 		</dependency>
-
+	
         <dependency>
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-server</artifactId>
@@ -58,6 +59,7 @@
 			<artifactId>jersey-hk2</artifactId>
 			<version>3.1.1</version>
 		</dependency>
+		
 		<dependency>
 			<groupId>com.oracle.database.jdbc</groupId>
 			<artifactId>ojdbc8</artifactId>
