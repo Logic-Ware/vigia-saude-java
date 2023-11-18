@@ -9,11 +9,32 @@ import br.com.fiap.vigiasaude.model.Unidade;
 import br.com.fiap.vigiasaude.model.Medico;
 
 public class MedicoDao {
+
+	UnidadeDao unidadeDao = new UnidadeDao();
+	
+	private Medico populaMedico(ResultSet rs) throws SQLException, ClassNotFoundException {
+		Unidade unidade = unidadeDao.findById(rs.getLong("id_unidade"));
+        return new Medico(
+				rs.getLong("id_medico"),
+				rs.getString("nom_medico"),
+				rs.getString("des_especialidade"),
+				rs.getString("num_crm"),
+				rs.getString("des_telefone"),
+				rs.getString("des_email"),
+				rs.getString("des_senha"),
+				unidade);
+    }
 	
 	public void cadastrar(Medico medico) throws ClassNotFoundException, SQLException {
 		Connection connection = ConnectionFactory.getConnection();
-		String sql = "INSERT INTO T_VGS_MEDICO(nom_medico, des_especialidade, num_crm,"
-				+ "des_telefone, id_unidade,des_email, des_senha) "
+		String sql = "INSERT INTO T_VGS_MEDICO("
+				+ "nom_medico,"
+				+ "des_especialidade, "
+				+ "num_crm,"
+				+ "des_telefone, "
+				+ "id_unidade,"
+				+ "des_email, "
+				+ "des_senha) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = connection.prepareStatement(sql);
 		ps.setString(1, medico.getNome());
@@ -28,58 +49,26 @@ public class MedicoDao {
 	}
 
 	public Medico buscarPorEmail(String email) throws ClassNotFoundException, SQLException {
-		Connection connection = ConnectionFactory.getConnection();
-		String sql = "SELECT * FROM T_VGS_MEDICO WHERE des_email = ?";
-		PreparedStatement ps = connection.prepareStatement(sql);
-		ps.setString(1, email);
-		ResultSet rs = ps.executeQuery();
-		
-		Medico medico = null;
-		UnidadeDao unidadeDao = new UnidadeDao();
-		
-		while(rs.next()) {
-			Unidade unidade = unidadeDao.findById(rs.getLong("id_unidade"));
-			
-			medico = new Medico(
-					rs.getLong("id_medico"),
-					rs.getString("des_nome"),
-					rs.getString("des_especialidade"),
-					rs.getString("num_crm"),
-					rs.getString("des_telefone"),
-					rs.getString("des_email"),
-					rs.getString("des_senha"),
-					unidade);
+		try(Connection connection = ConnectionFactory.getConnection()){
+			String sql = "SELECT * FROM T_VGS_MEDICO WHERE des_email = ?";
+			try(PreparedStatement ps = connection.prepareStatement(sql)){
+				ps.setString(1, email);
+				try(ResultSet rs = ps.executeQuery()){
+					return rs.next() ? populaMedico(rs) : null;
+				}
+			}
 		}
-		connection.close();
-		return medico;
 	}
 
 	public Medico buscaPorId(Long id) throws ClassNotFoundException, SQLException {
-		Connection connection = ConnectionFactory.getConnection();
-		String sql = "SELECT * FROM T_VGS_MEDICO WHERE id_medico = ?";
-		PreparedStatement ps = connection.prepareStatement(sql);
-		ps.setLong(1, id);
-		ResultSet rs = ps.executeQuery();
-		
-		Medico medico = null;
-		UnidadeDao unidadeDao = new UnidadeDao();
-		
-		while(rs.next()) {
-			Unidade unidade = unidadeDao.findById(rs.getLong("id_unidade"));
-			
-			medico = new Medico(
-					rs.getLong("id_medico"),
-					rs.getString("nom_medico"),
-					rs.getString("des_especialidade"),
-					rs.getString("num_crm"),
-					rs.getString("des_telefone"),
-					rs.getString("des_email"),
-					rs.getString("des_senha"),
-					unidade);
+		try(var connection = ConnectionFactory.getConnection()){
+			var sql = "SELECT * FROM T_VGS_MEDICO WHERE id_medico = ?";
+			try(var ps = connection.prepareStatement(sql)){
+				ps.setLong(1, id);
+				try(var rs = ps.executeQuery()){
+					return rs.next() ? populaMedico(rs) : null;
+				}
+			}
 		}
-		connection.close();
-		return medico;
 	}
-	
-	
 }

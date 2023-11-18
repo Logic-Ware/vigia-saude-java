@@ -36,7 +36,6 @@ public class MedicoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response cadastrarMedico(Medico medico) {
 		if (service.existeMedico(medico)) return Response.status(Response.Status.CONFLICT).entity("Email em uso.").build();
-		
 		if (!service.cadastrarMedico(medico)) return Response.status(Response.Status.BAD_REQUEST).entity("Requisição Inválida.").build();
 		return Response.ok(medico).build();
 	}
@@ -46,7 +45,7 @@ public class MedicoResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(Medico medico) {
 		if (!service.validaMedico(medico)) 
-			return Response.status(Response.Status.NOT_FOUND).entity("Não Encontrado").build();
+			return Response.status(Response.Status.UNAUTHORIZED).entity("Não Autenticado").build();
 		return Response.ok(medico).build();
 	}
 }

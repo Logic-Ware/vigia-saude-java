@@ -10,20 +10,18 @@ public class UnidadeService {
 	UnidadeDao dao = new UnidadeDao();
 
 	public boolean existeUnidade(Unidade unidade) {
-		var unidadeEncontrado = buscarPorNome(unidade);
-		return unidadeEncontrado != null
-				&& unidadeEncontrado.getNome().equals(unidade.getNome());
-				
-	}
-	
-	public Unidade buscarPorNome(Unidade unidade) {
+		Unidade unidadeEncontrado;
 		try {
-			Unidade unidadeEncontrado = dao.findByNome(unidade.getEmail());
-			return unidadeEncontrado;
+			unidadeEncontrado = dao.findByEmail(unidade.getEmail());
+			return unidadeEncontrado != null
+					&& unidadeEncontrado.getNome().equals(unidade.getNome())
+					&& unidadeEncontrado.getCnes().equals(unidade.getCnes())
+					&& unidadeEncontrado.getEmail().equals(unidade.getEmail());
+			
 		} catch (ClassNotFoundException | SQLException e) {
-			e.getMessage();
+			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 	
 	public Unidade buscarPorId(Long id) {
@@ -37,9 +35,15 @@ public class UnidadeService {
 	}
 
 	public boolean validaUnidade(Unidade unidade) {
-			var hospitalEncontrado = buscarPorNome(unidade);
-			return hospitalEncontrado.getEmail().equals(unidade.getEmail())
-					&& hospitalEncontrado.getSenha().equals(unidade.getSenha());
+			try {
+				Unidade unidadeEncontrado = dao.findByEmail(unidade.getEmail());
+				return unidade.getEmail()!= null
+						&&unidadeEncontrado.getEmail().equals(unidade.getEmail())
+						&& unidadeEncontrado.getSenha().equals(unidade.getSenha());
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+			return false;
 	}
 
 	public boolean cadastrar(Unidade unidade) {
