@@ -37,11 +37,13 @@ public class MedicoDao {
 				+ "des_senha) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = connection.prepareStatement(sql);
+		System.out.println(medico);
 		ps.setString(1, medico.getNome());
 		ps.setString(2, medico.getEspecialidade());
 		ps.setString(3, medico.getCrm());
 		ps.setString(4, medico.getTelefone());
 		ps.setLong(5, medico.getUnidade().getId());
+		System.out.println(medico.getUnidade());
 		ps.setString(6, medico.getEmail());
 		ps.setString(7, medico.getSenha());
 		ps.executeUpdate();
