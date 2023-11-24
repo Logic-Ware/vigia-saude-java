@@ -1,5 +1,7 @@
 package br.com.fiap.vigiasaude.resource;
 
+import java.util.List;
+
 import br.com.fiap.vigiasaude.model.Unidade;
 import br.com.fiap.vigiasaude.service.UnidadeService;
 import jakarta.ws.rs.GET;
@@ -16,6 +18,15 @@ public class UnidadeResource {
 	UnidadeService service = new UnidadeService();
 	
 	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listarTodos(){
+		List<Unidade> listUnidade = service.buscarTodos();
+		if (listUnidade == null) return Response.status(Response.Status.NOT_FOUND).entity("Não Encontrado").build();
+		return Response.ok(listUnidade).build();
+
+	}
+	
+	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listarUnidade(@PathParam("id") Long id){
@@ -24,7 +35,6 @@ public class UnidadeResource {
 		return Response.ok(unidade).build();
 
 	}
-
 	
 	@POST
 	@Path("cadastro")

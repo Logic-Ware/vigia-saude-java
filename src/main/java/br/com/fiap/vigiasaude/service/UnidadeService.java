@@ -1,6 +1,7 @@
 package br.com.fiap.vigiasaude.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import br.com.fiap.vigiasaude.data.UnidadeDao;
 import br.com.fiap.vigiasaude.model.Unidade;
@@ -60,6 +61,19 @@ public class UnidadeService {
 		}
 		return false;
 	}
+
+	public List<Unidade> buscarTodos() {
+		try {
+			List<Unidade> lista = dao.findAll();
+			return lista;
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	
 
 
 }

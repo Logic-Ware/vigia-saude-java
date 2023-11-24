@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.fiap.vigiasaude.model.Unidade;
 
@@ -90,5 +92,19 @@ public class UnidadeDao {
 			}
 		}
 	}
-	
+
+	public List<Unidade> findAll() throws ClassNotFoundException, SQLException {
+		List<Unidade> listaUnidades = new ArrayList<>();
+		try(Connection connection = ConnectionFactory.getConnection()){
+			String sql = "SELECT * FROM T_VGS_UNIDADE";
+			try(PreparedStatement ps = connection.prepareStatement(sql)){
+				try (ResultSet rs = ps.executeQuery()) {
+	                while (rs.next()) {
+	                    listaUnidades.add(populaUnidade(rs));
+	                }
+	            }
+			}
+		}
+		return listaUnidades;
+	}
 }
