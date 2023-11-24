@@ -1,16 +1,5 @@
 package br.com.fiap.vigiasaude.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-@Data
-@Getter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
 public class Medico{
 	
 	private Long id;
@@ -21,4 +10,51 @@ public class Medico{
 	private String email;
 	private String senha;
 	private Unidade unidade;
+	
+	public Medico() {}
+
+	public Medico(Long id, String nome, String especialidade, String crm, String telefone, String email, String senha,
+			Unidade unidade) {
+		this.id = id;
+		this.nome = nome;
+		this.especialidade = especialidade;
+		this.crm = crm;
+		this.telefone = telefone;
+		this.email = email;
+		this.senha = senha;
+		this.unidade = unidade;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getEspecialidade() {
+		return especialidade;
+	}
+
+	public String getCrm() {
+		return crm;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public Unidade getUnidade() {
+		return unidade;
+	}
+	
 }

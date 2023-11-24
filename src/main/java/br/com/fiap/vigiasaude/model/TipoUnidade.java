@@ -1,16 +1,25 @@
 package br.com.fiap.vigiasaude.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@Data
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class TipoUnidade {
 
 	private Long id;
 	private String descricao;
+	
+	public TipoUnidade() {}
+
+	public TipoUnidade(Long id, String descricao) {
+		this.id = id;
+		this.descricao = descricao;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	
+	
 }
