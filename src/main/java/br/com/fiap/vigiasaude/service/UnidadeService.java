@@ -37,8 +37,9 @@ public class UnidadeService {
 	public boolean validaUnidade(Unidade unidade) {
 			try {
 				Unidade unidadeEncontrado = dao.findByEmail(unidade.getEmail());
+				if (unidadeEncontrado == null ) return false;
 				return unidade.getEmail()!= null
-						&&unidadeEncontrado.getEmail().equals(unidade.getEmail())
+						&& unidadeEncontrado.getEmail().equals(unidade.getEmail())
 						&& unidadeEncontrado.getSenha().equals(unidade.getSenha());
 			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
