@@ -9,7 +9,9 @@ import br.com.fiap.vigiasaude.model.Unidade;
 
 public class UnidadeDao {
 	
-	private Unidade populaUnidade(ResultSet rs) throws SQLException {
+	private Unidade populaUnidade(ResultSet rs) throws SQLException, ClassNotFoundException {
+		TipoDao dao = new TipoDao();
+		var tipo = dao.buscarPorId(rs.getLong("id_tipo"));
         return new Unidade(
                 rs.getLong("id_unidade"),
                 rs.getString("nom_unidade"),
@@ -20,8 +22,8 @@ public class UnidadeDao {
                 rs.getString("des_cep_unidade"),
                 rs.getString("des_estado"),
                 rs.getString("des_cidade"),
-                rs.getString("des_CNES"),
-                rs.getLong("id_tipo"));
+                rs.getString("num_CNES"),
+                tipo);
     }
 	
 	public Unidade findByNome(String nome) throws ClassNotFoundException, SQLException {
@@ -46,7 +48,7 @@ public class UnidadeDao {
 	            + "des_cep_unidade, "
 	            + "des_senha, des_estado, "
 	            + "des_cidade, "
-	            + "des_CNES, "
+	            + "num_CNES, "
 	            + "id_tipo) "
 	            + "VALUES (?,?,?,?,?,?,?,?,?,?)";
 	    PreparedStatement ps = connection.prepareStatement(sql);
@@ -59,7 +61,7 @@ public class UnidadeDao {
 	    ps.setString(7, unidade.getEstado());
 	    ps.setString(8, unidade.getCidade());
 	    ps.setString(9, unidade.getCnes());
-	    ps.setLong(10, unidade.getTipo());
+	    ps.setLong(10, unidade.getTipo().getId());
 		
 	    ps.executeUpdate();
 		connection.close();
