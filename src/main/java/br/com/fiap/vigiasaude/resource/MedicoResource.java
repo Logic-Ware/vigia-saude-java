@@ -16,12 +16,6 @@ public class MedicoResource {
 	MedicoService service = new MedicoService();
 	
 	@GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it! - Medico";
-    }
-	
-	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listarMedico(@PathParam("id") Long id){

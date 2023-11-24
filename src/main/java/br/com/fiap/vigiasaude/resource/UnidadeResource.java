@@ -16,21 +16,15 @@ public class UnidadeResource {
 	UnidadeService service = new UnidadeService();
 	
 	@GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it! - Unidade";
-    }
-	
-	@GET
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response listarUnidade(@PathParam("id") Long id){
 		var unidade = service.buscarPorId(id);
 		if (unidade == null) return Response.status(Response.Status.NOT_FOUND).entity("Não Encontrado").build();
 		return Response.ok(unidade).build();
-		
+
 	}
-	
+
 	
 	@POST
 	@Path("cadastro")
@@ -47,6 +41,6 @@ public class UnidadeResource {
 	public Response login(Unidade unidade) {
 		if(!service.validaUnidade(unidade)) 
 			return Response.status(Response.Status.UNAUTHORIZED).entity("Não Autenticado").build();
-		return Response.ok().build();
+		return Response.ok(unidade).build();
 	}
 }

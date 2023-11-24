@@ -17,10 +17,12 @@ public class TipoResource {
 	TipoService service = new TipoService();
 	
 	@GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it! - Tipo";
-    }
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response listarTodos() {
+		List<TipoUnidade> listTipos = service.listarTodos();
+		if (listTipos == null) Response.status(Response.Status.NOT_FOUND).entity("Não Encontrado").build();
+		return Response.ok(listTipos).build();
+	}
 	
 	@GET
 	@Path("{id}")
@@ -30,14 +32,5 @@ public class TipoResource {
 		if (tipo == null) return Response.status(Response.Status.NOT_FOUND).entity("Não Encontrado").build();
 		return Response.ok(tipo).build();
 		
-	}
-	
-	@GET
-	@Path("all")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response listarTodos() {
-		List<TipoUnidade> listTipos = service.listarTodos();
-		if (listTipos == null) Response.status(Response.Status.NOT_FOUND).entity("Não Encontrado").build();
-		return Response.ok(listTipos).build();
 	}
 }
