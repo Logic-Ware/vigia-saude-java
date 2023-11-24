@@ -34,12 +34,4 @@ public class MedicoResource {
 		return Response.ok(medico).build();
 	}
 	
-	@POST
-	@Path("login")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(Medico medico) {
-		if (!service.validaMedico(medico)) 
-			return Response.status(Response.Status.UNAUTHORIZED).entity("Não Autenticado").build();
-		return Response.ok(medico).build();
-	}
 }

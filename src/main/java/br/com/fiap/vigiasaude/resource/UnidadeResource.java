@@ -45,12 +45,4 @@ public class UnidadeResource {
 		return Response.ok(unidade).build();
 	}
 	
-	@POST
-	@Path("login")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(Unidade unidade) {
-		if(!service.validaUnidade(unidade)) 
-			return Response.status(Response.Status.UNAUTHORIZED).entity("Não Autenticado").build();
-		return Response.ok(unidade).build();
-	}
 }
