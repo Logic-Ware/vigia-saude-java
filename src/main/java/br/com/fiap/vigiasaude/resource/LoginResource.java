@@ -19,7 +19,7 @@ public class LoginResource {
 	@POST
 	@Path("medico")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(Medico medico) {
+	public Response loginMedico(Medico medico) {
 		if (!medicoService.validaMedico(medico)) 
 			return Response.status(Response.Status.UNAUTHORIZED).entity("Não Autenticado").build();
 		return Response.ok("Validado").build();
@@ -28,7 +28,7 @@ public class LoginResource {
 	@POST
 	@Path("unidade")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response login(Unidade unidade) {
+	public Response loginUnidade(Unidade unidade) {
 		if(!unidadeService.validaUnidade(unidade)) 
 			return Response.status(Response.Status.UNAUTHORIZED).entity("Não Autenticado").build();
 		return Response.ok("Validado").build();
